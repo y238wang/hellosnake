@@ -1,9 +1,18 @@
+resources:
+- name: hellosnake
+  type: git
+  source:
+    uri: https://github.com/y238wang/hellosnake
+
 jobs:
-- name: hello_snake_job
+- name: deploy
   plan:
-    - task: hello_snake_task
+    - get: hellosnake
+    - task: deploy_task
       config:
         platform: linux
+        inputs:
+        - name: hellosnake
         image_resource:
           type: docker-image
           source: { repository: ubuntu }
