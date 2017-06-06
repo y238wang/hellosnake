@@ -34,8 +34,7 @@ jobs:
           args:
           - -exc
           - |
-            mv hellosnake/index.html build-output
-            mv hellosnake/manifest.yml build-output
+            mv hellosnake/* build-output
     - put: cf-production
       params:
         manifest: build-output/manifest.yml
