@@ -46,6 +46,7 @@
     #time-display, #word1-display, #word2-display {
       text-align: center;
       margin: 20px 0;
+      cursor: pointer;
     }
 
     #time-display {
@@ -54,7 +55,6 @@
 
     #word1-display, #word2-display {
       font-size: 80px;
-      cursor: pointer;
     }
   </style>
 </head>
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <div id="time-display">0:00</div>
+  <div id="time-display" onclick="timerToggle()">0:00</div>
   <div id="word1-display" onclick="fetchWord(this)">hello</div>
   <div id="word2-display" onclick="fetchWord(this)">snake</div>
 </div>
