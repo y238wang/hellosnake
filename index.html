@@ -13,7 +13,7 @@
 
     #buttons-container {
       width: 225px;
-      margin: auto;
+      margin: 20px auto;
     }
 
     #refresh-button {
@@ -27,6 +27,7 @@
       border-radius: 25px;
       border: 2px solid black;
       display: inline-block;
+      vertical-align: bottom;
       cursor: pointer;
 
       -webkit-transition-duration: 0.4s; /* Safari */
@@ -44,7 +45,7 @@
 
     #time-display, #word1-display, #word2-display {
       text-align: center;
-      margin: 20px 0 20px 0;
+      margin: 20px 0;
     }
 
     #time-display {
@@ -60,8 +61,10 @@
 <div id="app-container">
   <div id="buttons-container">
     <div id="refresh-button" class="button" onclick="refresh()"><img src="images/refresh.png"></div>
-    <div id="play-button" class="button" onclick="play()"><img src="images/play.png"></div>
-    <div id="pause-button" class="button" onclick="pause()" style="display:none"><img src="images/pause.png"></div>
+    <div class="button" onclick="timerToggle()">
+      <img id="play-image" src="images/play.png">
+      <img id="pause-image" src="images/pause.png" style="display:none">
+    </div>
   </div>
 
   <div id="time-display">0:00</div>
@@ -70,8 +73,8 @@
 </div>
 
 <script type="text/javascript">
-let playButton = document.getElementById("play-button");
-let pauseButton = document.getElementById("pause-button");
+let playImage = document.getElementById("play-image");
+let pauseImage = document.getElementById("pause-image");
 let timeDisplay = document.getElementById("time-display");
 let word1Display = document.getElementById("word1-display");
 let word2Display = document.getElementById("word2-display");
@@ -96,16 +99,20 @@ function refresh() {
   fetchWord(word1Display, () => { fetchWord(word2Display); });
 }
 
+function timerToggle() {
+  isPaused ? play() : pause();
+}
+
 function play() {
   isPaused = false;
-  playButton.style.display = "none";
-  pauseButton.style.display = "inline-block";
+  playImage.style.display = "none";
+  pauseImage.style.display = "block";
 }
 
 function pause() {
   isPaused = true;
-  playButton.style.display = "inline-block";
-  pauseButton.style.display = "none";
+  playImage.style.display = "block";
+  pauseImage.style.display = "none";
 }
 
 function updateTime() {
