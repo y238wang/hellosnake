@@ -3,62 +3,7 @@
 <head>
 	<title>hellosnake</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=0.75" />
-  <style type="text/css">
-    * {
-      font-family: sans-serif;
-    }
-
-    #app-container {
-      width: 100%;
-    }
-
-    #buttons-container {
-      width: 225px;
-      margin: 30px auto;
-    }
-
-    #refresh-button {
-      margin-right: 10px;
-    }
-
-    .button {
-      width: 70px;
-      height: 70px;
-      padding: 15px;
-      border-radius: 25px;
-      border: 2px solid black;
-      display: inline-block;
-      vertical-align: bottom;
-      cursor: pointer;
-
-      -webkit-transition-duration: 0.4s; /* Safari */
-      transition-duration: 0.4s;
-    }
-
-    .button:hover {
-      background-color: lightgrey;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-
-    #time-display, #word1-display, #word2-display {
-      text-align: center;
-      margin: 30px 0;
-      cursor: pointer;
-    }
-
-    #time-display {
-      font-size: 120px;
-      background: lightblue;
-    }
-
-    #word1-display, #word2-display {
-      font-size: 80px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
 <div id="app-container">
@@ -73,79 +18,8 @@
   <div id="time-display" onclick="timerToggle()">0:00</div>
   <div id="word1-display" onclick="fetchWord(this)">hello</div>
   <div id="word2-display" onclick="fetchWord(this)">snake</div>
+
+  <script type="text/javascript" src="index.js"></script>
 </div>
-
-<script type="text/javascript">
-let playImage = document.getElementById("play-image");
-let pauseImage = document.getElementById("pause-image");
-let timeDisplay = document.getElementById("time-display");
-let word1Display = document.getElementById("word1-display");
-let word2Display = document.getElementById("word2-display");
-
-let seconds = 0;
-let isPaused = true;
-let timer = window.setInterval(function() {
-  if(!isPaused) {
-    seconds++;
-    updateTime()
-  }
-}, 1000);
-
-refresh();
-
-function refresh() {
-  pause();
-  seconds = 0;
-  updateTime();
-
-  //watchout4snakes endpoint is weird
-  fetchWord(word1Display, () => { fetchWord(word2Display); });
-}
-
-function timerToggle() {
-  isPaused ? play() : pause();
-}
-
-function play() {
-  isPaused = false;
-  playImage.style.display = "none";
-  pauseImage.style.display = "block";
-}
-
-function pause() {
-  isPaused = true;
-  playImage.style.display = "block";
-  pauseImage.style.display = "none";
-}
-
-function updateTime() {
-  timeDisplay.innerHTML = formatTime(seconds);
-  if (seconds > 60) {
-    timeDisplay.style.background = "lightgreen"
-  } else {
-    timeDisplay.style.background = "lightblue"
-  }
-}
-
-function formatTime(seconds) {
-  return Math.floor(seconds/60) + ":" + (seconds % 60 < 10 ? "0" : "") + (seconds % 60);
-}
-
-function fetchWord(element, callback) {
-  let xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "http://hellosnake.cfapps.io/snake", true);
-
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      element.innerHTML = xhttp.responseText;
-      if (callback) {
-        callback();
-      }
-    }
-  };
-
-  xhttp.send();
-}
-</script>
 </body>
 </html>
