@@ -54,6 +54,7 @@
 
     #word1-display, #word2-display {
       font-size: 80px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -68,8 +69,8 @@
   </div>
 
   <div id="time-display">0:00</div>
-  <div id="word1-display">hello</div>
-  <div id="word2-display">snake</div>
+  <div id="word1-display" onclick="fetchWord(this)">hello</div>
+  <div id="word2-display" onclick="fetchWord(this)">snake</div>
 </div>
 
 <script type="text/javascript">
