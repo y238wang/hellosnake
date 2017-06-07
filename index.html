@@ -51,6 +51,7 @@
 
     #time-display {
       font-size: 120px;
+      background: lightblue;
     }
 
     #word1-display, #word2-display {
@@ -118,6 +119,11 @@ function pause() {
 
 function updateTime() {
   timeDisplay.innerHTML = formatTime(seconds);
+  if (seconds > 60) {
+    timeDisplay.style.background = "lightgreen"
+  } else {
+    timeDisplay.style.background = "lightblue"
+  }
 }
 
 function formatTime(seconds) {
