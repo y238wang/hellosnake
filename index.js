@@ -9,7 +9,7 @@ let isPaused = true;
 let timer = window.setInterval(function() {
   if(!isPaused) {
     seconds++;
-    updateTime()
+    updateTime();
   }
 }, 1000);
 
@@ -43,9 +43,9 @@ function pause() {
 function updateTime() {
   timeDisplay.innerHTML = formatTime(seconds);
   if (seconds > 60) {
-    timeDisplay.style.background = "lightgreen"
+    timeDisplay.style.background = "lightgreen";
   } else {
-    timeDisplay.style.background = "lightblue"
+    timeDisplay.style.background = "lightblue";
   }
 }
 
