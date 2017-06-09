@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>snake</title>
+</head>
+<body>
+  <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+
+<script type="text/javascript">
+const CANVASSIZE = 500;
+const GRIDSIZE = 20; //25x25
+
+let canvas = document.getElementById("myCanvas");
+let context = canvas.getContext("2d");
+context.textAlign = "center"
+context.font = "30px sans-serif";
+context.fillText("Arrow Keys", 250, 250);
+
+let snake = [{x: -4, y: 12}, {x: -3, y: 12}, {x: -2, y: 12}, {x: -1, y: 12}, {x: 0, y: 12}];
+let food = randomPosition();
+let direction = 'right';
+let nextDirection = 'right';
+let isDead = true;
+let interval = 100;
+
+let mainLoop = function() {
+  clearCanvas();
+  updateSnake();
+
+  if (isDead) {
+    drawSnake("red");
+    drawFood();
+  } else {
+    drawSnake();
+    drawFood();
+    setTimeout(mainLoop, interval);
+  }
+};
+
+document.addEventListener('keydown', (event) => {
+  let validKeys = {37: 'left', 38: 'up', 39: 'right', 40: 'down'};
+  if (isDead && validKeys[event.keyCode]) {
+    newGame();
+  } else {
+    if (direction === 'left' || direction === 'right') {
+      validKeys = {38: 'up', 40: 'down'};
+    } else {
+      validKeys = {37: 'left', 39: 'right'};
+    }
+    nextDirection = validKeys[event.keyCode] || nextDirection;
+  }
+});
+
+function newGame() {
+  snake = [{x: -4, y: 12}, {x: -3, y: 12}, {x: -2, y: 12}, {x: -1, y: 12}, {x: 0, y: 12}];
+  food = randomPosition();
+  direction = 'right';
+  nextDirection = 'right';
+  isDead = false;
+  interval = 100;
+  mainLoop();
+}
+
+function updateSnake() {
+  let x = snake[snake.length-1].x;
+  let y = snake[snake.length-1].y;
+  switch(nextDirection) {
+    case 'left':
+      x--;
+      break;
+    case 'up':
+      y--;
+      break;
+    case 'right':
+      x++;
+      break;
+    case 'down':
+      y++;
+      break;
+  }
+
+  if (x < 0 || x > 24 || y < 0 || y > 24 || hasCollision(x, y)) {
+    isDead = true;
+  } else {
+    snake.push({x, y});
+    direction = nextDirection;
+
+    if (x === food.x && y === food.y) {
+      food = randomPosition();
+      interval *= 0.95;
+    } else {
+      snake.splice(0, 1);
+    }
+  }
+}
+
+function randomPosition() {
+  return {x: Math.floor(Math.random() * CANVASSIZE/GRIDSIZE),
+          y: Math.floor(Math.random() * CANVASSIZE/GRIDSIZE)}
+}
+
+function hasCollision(x, y) {
+  for (let i = 0; i < snake.length; i++) {
+    if (x == snake[i].x && y == snake[i].y) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function clearCanvas() {
+  context.fillStyle = "white";
+  context.fillRect(0, 0, CANVASSIZE, CANVASSIZE);
+}
+
+function drawSnake(color) {
+  for (let i = 0; i < snake.length; i++) {
+    drawRect(snake[i].x, snake[i].y, color || "darkgray");
+  }
+}
+
+function drawFood() {
+  drawRect(food.x, food.y, "green");
+}
+
+function drawRect(x, y, color) {
+  context.fillStyle = color || "black";
+  context.fillRect(x * GRIDSIZE, y * GRIDSIZE, GRIDSIZE, GRIDSIZE);
+}
+
+</script>
+</body>
+</html>
