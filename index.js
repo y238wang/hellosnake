@@ -42,10 +42,14 @@ function pause() {
 
 function updateTime() {
   timeDisplay.innerHTML = formatTime(seconds);
-  if (seconds > 60) {
-    timeDisplay.style.background = "lightgreen";
-  } else {
+  if (seconds < 60) {
     timeDisplay.style.background = "lightblue";
+  } else if (seconds < 90) {
+    timeDisplay.style.background = "lightgreen";
+  } else if (seconds < 120) {
+    timeDisplay.style.background = "khaki";
+  } else {
+    timeDisplay.style.background = "tomato";
   }
 }
 
