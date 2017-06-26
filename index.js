@@ -3,6 +3,7 @@ let pauseImage = document.getElementById("pause-image");
 let timeDisplay = document.getElementById("time-display");
 let word1Display = document.getElementById("word1-display");
 let word2Display = document.getElementById("word2-display");
+let word3Display = document.getElementById("word3-display");
 
 let seconds = 0;
 let isPaused = true;
@@ -21,7 +22,7 @@ function refresh() {
   updateTime();
 
   //watchout4snakes endpoint is weird
-  fetchWord(word1Display, () => { fetchWord(word2Display); });
+  fetchWord(word1Display, () => { fetchWord(word2Display, () => fetchWord(word3Display)) });
 }
 
 function timerToggle() {

@@ -38,7 +38,7 @@ img {
   height: 100%;
 }
 
-#time-display, #word1-display, #word2-display {
+#time-display, .word-display {
   text-align: center;
   margin: 30px 0;
   cursor: pointer;
@@ -49,6 +49,6 @@ img {
   background: lightblue;
 }
 
-#word1-display, #word2-display {
+.word-display {
   font-size: 80px;
 }
