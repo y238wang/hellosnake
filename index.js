@@ -17,12 +17,16 @@ let timer = window.setInterval(function() {
 refresh();
 
 function refresh() {
-  pause();
-  seconds = 0;
-  updateTime();
+  rewind();
 
   //watchout4snakes endpoint is weird
   fetchWord(word1Display, () => { fetchWord(word2Display, () => fetchWord(word3Display)) });
+}
+
+function rewind() {
+  pause();
+  seconds = 0;
+  updateTime();
 }
 
 function timerToggle() {
