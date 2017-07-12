@@ -16,6 +16,14 @@ let timer = window.setInterval(function() {
 
 refresh();
 
+document.addEventListener('keydown', (event) => {
+  if (event.keyCode === 32) { //spacebar
+    timerToggle();
+  } else if (event.keyCode === 82) { //r
+    refresh();
+  }
+});
+
 function refresh() {
   rewind();
 
